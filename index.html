@@ -175,7 +175,7 @@
             </div>
 
             <!-- Botón Menú Móvil -->
-            <button class="md:hidden text-ink">
+            <button id="mobileMenuBtn" class="md:hidden text-ink">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <line x1="3" y1="12" x2="21" y2="12"></line>
                     <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -308,6 +308,31 @@
         </div>
     </footer>
 
+    <!-- MENÚ MÓVIL SLIDE-OVER -->
+    <div id="mobileMenuOverlay" class="fixed inset-0 bg-ink/80 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-500"></div>
+    <div id="mobileMenuSidebar" class="fixed top-0 right-0 h-full w-[80vw] max-w-sm bg-paper text-ink z-[60] transform translate-x-full transition-transform duration-500 ease-in-out border-l border-ink/10 flex flex-col">
+        <div class="p-6 md:p-8 flex justify-end items-center border-b border-ink/10">
+            <button id="closeMobileMenuBtn" class="text-ash hover:text-ink transition-colors">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="flex flex-col gap-8 p-8 md:p-12 overflow-y-auto">
+            <a href="index.html#origen" class="font-serif tracking-widest text-2xl uppercase mobile-link">El Origen</a>
+            <a href="nosotros.html" class="font-serif tracking-widest text-2xl uppercase mobile-link">Sobre Nosotros</a>
+            <a href="catalogo.html" class="font-serif tracking-widest text-2xl uppercase mobile-link">Catálogo</a>
+            <a href="contacto.html" class="font-serif tracking-widest text-2xl uppercase mobile-link">Contacto</a>
+        </div>
+        <div class="mt-auto p-8 border-t border-ink/10">
+            <div class="flex flex-col gap-4 font-sans text-xs uppercase tracking-[0.2em] text-ash">
+                <a href="#" class="hover:text-gold transition-colors">Instagram</a>
+                <a href="#" class="hover:text-gold transition-colors">Facebook</a>
+            </div>
+        </div>
+    </div>
+
     <!-- LÓGICA DE REVELADO (Sin animaciones continuas molestas) -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -342,6 +367,28 @@
                     navbar.classList.remove('bg-paper/95', 'backdrop-blur-md', 'border-ink/10', 'py-4');
                 }
             });
+
+            // Lógica del Menú Móvil
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const closeMobileMenuBtn = document.getElementById('closeMobileMenuBtn');
+            const mobileMenuSidebar = document.getElementById('mobileMenuSidebar');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            function openMobileMenu() {
+                mobileMenuSidebar.classList.remove('translate-x-full');
+                mobileMenuOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            }
+
+            function closeMobileMenu() {
+                mobileMenuSidebar.classList.add('translate-x-full');
+                mobileMenuOverlay.classList.add('opacity-0', 'pointer-events-none');
+            }
+
+            if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileMenu);
+            if (closeMobileMenuBtn) closeMobileMenuBtn.addEventListener('click', closeMobileMenu);
+            if (mobileMenuOverlay) mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+            mobileLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
         });
     </script>
 </body>
