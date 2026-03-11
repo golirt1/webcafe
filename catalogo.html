@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo - Oro Verde</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fuentes: Playfair (Lujo Clásico), Montserrat (UI Limpia), Great Vibes (Detalle Logo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'paper': '#F5F2EB',      /* Crema ultra limpio */
+                        'ink': '#0A0A0A',        /* Negro carbón */
+                        'gold': '#BCA071',       /* Oro pálido elegante */
+                        'ash': '#888888',        /* Gris para jerarquía de texto */
+                    },
+                    fontFamily: {
+                        'sans': ['Montserrat', 'sans-serif'],
+                        'serif': ['Playfair Display', 'serif'],
+                        'script': ['Great Vibes', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::selection {
+            background-color: #BCA071;
+            color: #0A0A0A;
+        }
+
+        body {
+            background-color: #F5F2EB;
+            color: #0A0A0A;
+        }
+
+        /* Ocultar scrollbar para estética más limpia */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F5F2EB;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #0A0A0A;
+        }
+
+        /* Efecto de revelado suave al scroll (Sin exagerar) */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Imágenes de Lujo */
+        .img-container {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .img-container img {
+            transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .img-container:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Botón Editorial */
+        .btn-editorial {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            border-bottom: 1px solid #0A0A0A;
+            padding-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.7rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .btn-editorial::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #BCA071;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .btn-editorial:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .btn-editorial:hover {
+            color: #BCA071;
+            border-bottom-color: transparent;
+        }
+
+        /* Parallax muy sutil */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body class="antialiased font-sans flex flex-col min-h-screen bg-ink">
+
+    <!-- NAVEGACIÓN: Arquitectura Pura y Elegante -->
+    <nav id="navbar"
+        class="fixed w-full z-50 top-0 py-6 px-6 md:px-16 transition-all duration-500 bg-ink text-paper border-b border-white/10">
+        <div class="max-w-[1800px] mx-auto flex justify-between items-center">
+
+            <!-- Logo con isotipo minimalista -->
+            <a href="index.html" class="flex items-center gap-4 group">
+                <!-- Isotipo: Óvalo dorado simplificado -->
+                <div
+                    class="w-8 h-12 border border-gold rounded-[50%] flex items-center justify-center relative overflow-hidden transition-transform duration-700 group-hover:rotate-180">
+                    <div class="w-full h-[1px] bg-gold absolute opacity-50"></div>
+                    <div class="h-full w-[1px] bg-gold absolute opacity-50"></div>
+                    <div class="w-2 h-2 rounded-full border border-gold"></div>
+                </div>
+                <div class="flex flex-col items-start">
+                    <span class="font-serif text-xl tracking-[0.2em] uppercase leading-none text-paper group-hover:text-gold transition-colors duration-500">ORO VERDE</span>
+                    <span
+                        class="font-script text-2xl leading-none -mt-1 text-gold transition-colors duration-500">Guatemala</span>
+                </div>
+            </a>
+
+            <!-- Enlaces Centrales (Desktop) -->
+            <div class="hidden md:flex items-center gap-12">
+                <a href="index.html#origen"
+                    class="uppercase tracking-[0.2em] text-[10px] font-medium text-paper hover:text-gold transition-colors">El
+                    Origen</a>
+                <a href="nosotros.html"
+                    class="uppercase tracking-[0.2em] text-[10px] font-medium text-paper hover:text-gold transition-colors">Sobre Nosotros</a>
+                <a href="catalogo.html"
+                    class="uppercase tracking-[0.2em] text-[10px] font-medium text-paper hover:text-gold transition-colors">Catálogo</a>
+                <a href="contacto.html"
+                    class="uppercase tracking-[0.2em] text-[10px] font-medium text-paper hover:text-gold transition-colors">Contacto</a>
+            </div>
+
+            <!-- Acción / CTA y Carrito -->
+            <div class="hidden md:flex items-center gap-8">
+                <button id="cartBtnDesc" class="relative group flex items-center justify-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-paper group-hover:text-gold transition-colors">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="absolute -top-2 -right-2 bg-gold text-ink text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </button>
+            </div>
+
+            <!-- Botones Móvil -->
+            <div class="flex items-center gap-6 md:hidden">
+                <button id="cartBtnMob" class="relative group">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-paper">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="absolute -top-2 -right-2 bg-gold text-ink text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </button>
+                <button class="text-paper">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+    </nav>
+
+    <!-- Espaciador para el navbar fijo -->
+    <div class="mt-24 md:mt-32"></div>
+
+    <!-- BOUTIQUE / LA COLECCIÓN (Tienda Minimalista) -->
+    <section id="coleccion" class="py-16 md:py-24 px-6 md:px-16 bg-ink text-paper flex-grow">
+        <div class="max-w-[1800px] mx-auto">
+
+            <!-- Encabezado Tienda -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 md:mb-32 fade-up">
+                <div>
+                    <p class="font-sans text-[10px] uppercase tracking-[0.4em] text-gold mb-6">Boutique</p>
+                    <h2 class="font-serif text-5xl md:text-7xl uppercase tracking-tighter">Nuestro<br>Catálogo</h2>
+                </div>
+                <p
+                    class="font-sans text-xs uppercase tracking-[0.2em] text-ash max-w-xs text-left md:text-right leading-relaxed mt-8 md:mt-0">
+                    Nuestras reservas más exclusivas. Adquiere el resultado de la perfección artesanal.
+                </p>
+            </div>
+
+            <!-- Grid de Productos -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12">
+
+                <!-- Producto 1 -->
+                <div class="flex flex-col group cursor-pointer fade-up">
+                    <div class="w-full aspect-[3/4] img-container mb-8 bg-[#151515]">
+                        <img src="https://images.unsplash.com/photo-1607344645866-009c320b63e0?q=80&w=800&auto=format&fit=crop"
+                            alt="Reserva Antigua"
+                            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700">
+                    </div>
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-serif text-2xl uppercase tracking-widest text-paper">Reserva<br>Antigua</h3>
+                        <span class="font-sans text-sm text-gold">Q. 120.00</span>
+                    </div>
+                    <p class="font-sans text-[11px] text-ash font-light leading-relaxed mb-8 max-w-[80%]">
+                        Notas a cacao oscuro y nuez tostada. Cultivado a 1,500 metros sobre el nivel del mar.
+                    </p>
+                    <button class="btn-editorial text-paper w-fit" style="border-bottom-color: #F5F2EB;">Añadir al carrito</button>
+                </div>
+
+                <!-- Producto 2 -->
+                <div class="flex flex-col group cursor-pointer fade-up delay-100">
+                    <div class="w-full aspect-[3/4] img-container mb-8 bg-[#151515]">
+                        <img src="https://images.unsplash.com/photo-1559525839-b184a4d698c7?q=80&w=800&auto=format&fit=crop"
+                            alt="Finca Atitlán"
+                            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700 grayscale-[20%]">
+                    </div>
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-serif text-2xl uppercase tracking-widest text-paper">Finca<br>Atitlán</h3>
+                        <span class="font-sans text-sm text-gold">Q. 145.00</span>
+                    </div>
+                    <p class="font-sans text-[11px] text-ash font-light leading-relaxed mb-8 max-w-[80%]">
+                        Perfil brillante con toques cítricos y florales. La brisa del lago en cada extracción.
+                    </p>
+                    <button class="btn-editorial text-paper w-fit" style="border-bottom-color: #F5F2EB;">Añadir al carrito</button>
+                </div>
+
+                <!-- Producto 3 -->
+                <div class="flex flex-col group cursor-pointer fade-up delay-200">
+                    <div class="w-full aspect-[3/4] img-container mb-8 bg-[#151515]">
+                        <img src="https://images.unsplash.com/photo-1587049352851-8d4e8941b958?q=80&w=800&auto=format&fit=crop"
+                            alt="Edición Huehuetenango"
+                            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700">
+                    </div>
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-serif text-2xl uppercase tracking-widest text-paper">Edición<br>Huehue</h3>
+                        <span class="font-sans text-sm text-gold">Q. 160.00</span>
+                    </div>
+                    <p class="font-sans text-[11px] text-ash font-light leading-relaxed mb-8 max-w-[80%]">
+                        Cuerpo intenso, acidez fina y un final prolongado a caramelo tostado. Altura extrema.
+                    </p>
+                    <button class="btn-editorial text-paper w-fit" style="border-bottom-color: #F5F2EB;">Añadir al carrito</button>
+                </div>
+
+                <!-- Producto 4 -->
+                <div class="flex flex-col group cursor-pointer fade-up mt-8 md:mt-16">
+                    <div class="w-full aspect-[3/4] img-container mb-8 bg-[#151515]">
+                        <img src="https://images.unsplash.com/photo-1611162458324-aae1eb4129a4?q=80&w=800&auto=format&fit=crop"
+                            alt="Cosecha Cobán"
+                            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700 grayscale-[10%]">
+                    </div>
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-serif text-2xl uppercase tracking-widest text-paper">Cosecha<br>Cobán</h3>
+                        <span class="font-sans text-sm text-gold">Q. 135.00</span>
+                    </div>
+                    <p class="font-sans text-[11px] text-ash font-light leading-relaxed mb-8 max-w-[80%]">
+                        Aroma a bosque nuboso con notas a chocolate amargo y frutos del bosque.
+                    </p>
+                    <button class="btn-editorial text-paper w-fit" style="border-bottom-color: #F5F2EB;">Añadir al carrito</button>
+                </div>
+
+                <!-- Producto 5 -->
+                <div class="flex flex-col group cursor-pointer fade-up delay-100 mt-8 md:mt-16">
+                    <div class="w-full aspect-[3/4] img-container mb-8 bg-[#151515]">
+                        <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=800&auto=format&fit=crop"
+                            alt="Grano Fraijanes"
+                            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700">
+                    </div>
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-serif text-2xl uppercase tracking-widest text-paper">Grano<br>Fraijanes</h3>
+                        <span class="font-sans text-sm text-gold">Q. 150.00</span>
+                    </div>
+                    <p class="font-sans text-[11px] text-ash font-light leading-relaxed mb-8 max-w-[80%]">
+                        Acidez vibrante, notas aromáticas intensas y un toque dulce mineral único en su clase.
+                    </p>
+                    <button class="btn-editorial text-paper w-fit" style="border-bottom-color: #F5F2EB;">Añadir al carrito</button>
+                </div>
+
+                <!-- Producto 6 -->
+                <div class="flex flex-col group cursor-pointer fade-up delay-200 mt-8 md:mt-16">
+                    <div class="w-full aspect-[3/4] img-container mb-8 bg-[#151515]">
+                        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800&auto=format&fit=crop"
+                            alt="Oro Acatenango"
+                            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700 grayscale-[15%]">
+                    </div>
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-serif text-2xl uppercase tracking-widest text-paper">Oro<br>Acatenango</h3>
+                        <span class="font-sans text-sm text-gold">Q. 175.00</span>
+                    </div>
+                    <p class="font-sans text-[11px] text-ash font-light leading-relaxed mb-8 max-w-[80%]">
+                        Cultivado a la sombra del volcán. Dulzor excepcional y perfil a frutas de hueso.
+                    </p>
+                    <button class="btn-editorial text-paper w-fit" style="border-bottom-color: #F5F2EB;">Añadir al carrito</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. FOOTER ULTRAMINIMALISTA -->
+    <footer class="bg-ink text-paper px-6 md:px-16 pb-12 pt-20 border-t border-white/5 mt-auto">
+        <div class="max-w-[1800px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
+
+            <div class="flex flex-col gap-6">
+                <!-- Logo Footer -->
+                <div class="flex flex-col items-start">
+                    <span class="font-serif text-2xl tracking-[0.2em] uppercase leading-none">ORO VERDE</span>
+                    <span class="font-script text-3xl leading-none -mt-1 text-gold">Guatemala</span>
+                </div>
+                <a href="catalogo.html" class="btn-editorial text-paper mt-6" style="border-bottom-color: #F5F2EB;">Adquirir Colección</a>
+            </div>
+
+            <div
+                class="flex flex-col md:flex-row gap-12 md:gap-24 font-sans text-[10px] uppercase tracking-[0.2em] text-ash">
+                <div class="flex flex-col gap-4">
+                    <p class="text-paper mb-2">Navegación</p>
+                    <a href="index.html#origen" class="hover:text-gold transition-colors">El Origen</a>
+                    <a href="nosotros.html" class="hover:text-gold transition-colors">Sobre Nosotros</a>
+                    <a href="contacto.html" class="hover:text-gold transition-colors">Contacto</a>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <p class="text-paper mb-2">Social</p>
+                    <a href="#" class="hover:text-gold transition-colors">Instagram</a>
+                    <a href="#" class="hover:text-gold transition-colors">Facebook</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div
+            class="max-w-[1800px] mx-auto mt-24 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center font-sans text-[9px] uppercase tracking-[0.2em] text-ash">
+            <p>&copy;
+                <script>document.write(new Date().getFullYear())</script> Oro Verde. Todos los derechos reservados.
+            </p>
+            <p class="mt-4 md:mt-0">Premium by <span class="text-gold">Altavera</span></p>
+        </div>
+    </footer>
+
+    <!-- CARRITO SLIDE-OVER -->
+    <div id="cartOverlay" class="fixed inset-0 bg-ink/80 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-500"></div>
+    <div id="cartSidebar" class="fixed top-0 right-0 h-full w-full md:w-[450px] bg-paper text-ink z-[60] transform translate-x-full transition-transform duration-500 ease-in-out border-l border-ink/10 flex flex-col">
+        <!-- Header Carrito -->
+        <div class="p-8 border-b border-ink/10 flex justify-between items-center">
+            <h2 class="font-serif text-3xl uppercase tracking-widest">Tu <span class="italic text-gold">Selección</span></h2>
+            <button id="closeCartBtn" class="text-ash hover:text-ink transition-colors">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Items Carrito (Vacío por defecto) -->
+        <div id="cartItems" class="flex-grow p-8 overflow-y-auto flex flex-col justify-center items-center text-center">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-ash mb-6">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <p class="font-sans text-sm text-ash font-light leading-relaxed max-w-[80%]">
+                Tu selección está vacía.<br>Explora nuestras reservas exclusivas.
+            </p>
+        </div>
+
+        <!-- Checkout / Total -->
+        <div class="p-8 border-t border-ink/10 bg-paper">
+            <div class="flex justify-between items-end mb-6">
+                <span class="font-sans text-xs uppercase tracking-[0.2em] text-ash">Subtotal</span>
+                <span id="cartSubtotal" class="font-sans text-xl text-ink">Q. 0.00</span>
+            </div>
+            <a href="checkout.html" class="w-full bg-ink text-paper py-4 text-xs font-sans uppercase tracking-[0.2em] hover:bg-gold transition-colors duration-300 flex justify-center items-center text-center">
+                Proceder a la Orden
+            </a>
+        </div>
+    </div>
+
+    <!-- LÓGICA DE REVELADO (Sin animaciones continuas molestas) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const fadeElements = document.querySelectorAll('.fade-up');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            fadeElements.forEach(el => observer.observe(el));
+
+            // Lógica del Navbar estática oscura
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 30) {
+                    navbar.classList.add('bg-ink/95', 'backdrop-blur-md', 'py-4');
+                    navbar.classList.remove('py-6');
+                } else {
+                    navbar.classList.add('py-6');
+                    navbar.classList.remove('bg-ink/95', 'backdrop-blur-md', 'py-4');
+                }
+            });
+            // Lógica del Carrito
+            const cartBtnDesc = document.getElementById('cartBtnDesc');
+            const cartBtnMob = document.getElementById('cartBtnMob');
+            const closeCartBtn = document.getElementById('closeCartBtn');
+            const cartSidebar = document.getElementById('cartSidebar');
+            const cartOverlay = document.getElementById('cartOverlay');
+
+            function openCart() {
+                cartSidebar.classList.remove('translate-x-full');
+                cartOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            }
+
+            function closeCart() {
+                cartSidebar.classList.add('translate-x-full');
+                cartOverlay.classList.add('opacity-0', 'pointer-events-none');
+            }
+
+            if(cartBtnDesc) cartBtnDesc.addEventListener('click', openCart);
+            if(cartBtnMob) cartBtnMob.addEventListener('click', openCart);
+            if(closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
+            if(cartOverlay) cartOverlay.addEventListener('click', closeCart);
+
+            // --- Lógica de Añadir al Carrito ---
+            let cart = [];
+            const cartBadges = document.querySelectorAll('#cartBtnDesc span, #cartBtnMob span');
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartSubtotal = document.getElementById('cartSubtotal');
+            const productBtns = document.querySelectorAll('#coleccion button.btn-editorial');
+
+            const emptyCartHTML = `
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-ash mb-6">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                </svg>
+                <p class="font-sans text-sm text-ash font-light leading-relaxed max-w-[80%]">
+                    Tu selección está vacía.<br>Explora nuestras reservas exclusivas.
+                </p>
+            `;
+
+            function updateCartUI() {
+                // Actualizar badges
+                const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+                cartBadges.forEach(badge => badge.innerText = totalItems);
+
+                // Actualizar lista de items
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = emptyCartHTML;
+                    cartItemsContainer.classList.add('justify-center');
+                    cartItemsContainer.classList.remove('justify-start');
+                } else {
+                    cartItemsContainer.classList.remove('justify-center');
+                    cartItemsContainer.classList.add('justify-start');
+                    
+                    cartItemsContainer.innerHTML = cart.map(item => `
+                        <div class="flex items-center gap-6 w-full border-b border-ink/10 pb-6 mb-6 text-left">
+                            <img src="${item.img}" class="w-16 h-24 object-cover" alt="${item.name}">
+                            <div class="flex-grow">
+                                <h4 class="font-serif text-sm uppercase tracking-wider text-ink">${item.name}</h4>
+                                <span class="font-sans text-xs text-gold">Q. ${item.price.toFixed(2)}</span>
+                                <div class="flex items-center gap-4 mt-3 font-sans text-xs text-ink/80 bg-paper/50 w-fit px-3 py-1 border border-ink/5">
+                                    <button class="hover:text-gold transition-colors qty-btn text-lg leading-none" data-id="${item.id}" data-action="minus">-</button>
+                                    <span class="min-w-[1ch] text-center">${item.qty}</span>
+                                    <button class="hover:text-gold transition-colors qty-btn text-lg leading-none" data-id="${item.id}" data-action="plus">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                // Actualizar total
+                const totalAmount = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+                if (cartSubtotal) cartSubtotal.innerText = `Q. ${totalAmount.toFixed(2)}`;
+            }
+
+            // Detectar clicks en "Añadir al Carrito"
+            productBtns.forEach((btn, index) => {
+                btn.addEventListener('click', (e) => {
+                    const card = btn.closest('.group');
+                    // Extraer info de la tarjeta
+                    const nameHTML = card.querySelector('h3').innerHTML.replace('<br>', ' ');
+                    const priceStr = card.querySelector('span.text-gold').innerText; // Ejemplo: "Q. 120.00"
+                    const price = parseFloat(priceStr.replace('Q. ', ''));
+                    const img = card.querySelector('img').src;
+
+                    // Manejar lógica del arreglo de estado
+                    const existingItem = cart.find(item => item.id === index);
+                    if (existingItem) {
+                        existingItem.qty += 1;
+                    } else {
+                        cart.push({ id: index, name: nameHTML, price, img, qty: 1 });
+                    }
+                    
+                    updateCartUI();
+                    
+                    // Feedback visual en el botón
+                    const originalText = btn.innerText;
+                    btn.innerText = "¡Añadido!";
+                    btn.classList.add('text-gold');
+                    setTimeout(() => {
+                        btn.innerText = originalText;
+                        btn.classList.remove('text-gold');
+                    }, 1500);
+                    
+                    // Abrir el sidebar
+                    openCart();
+                });
+            });
+
+            // Delegación de eventos para suma/resta de items
+            cartItemsContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('qty-btn')) {
+                    const id = parseInt(e.target.getAttribute('data-id'));
+                    const action = e.target.getAttribute('data-action');
+                    const itemIndex = cart.findIndex(item => item.id === id);
+                    
+                    if (itemIndex > -1) {
+                        if (action === 'plus') {
+                            cart[itemIndex].qty += 1;
+                        } else if (action === 'minus') {
+                            cart[itemIndex].qty -= 1;
+                            if (cart[itemIndex].qty <= 0) {
+                                cart.splice(itemIndex, 1);
+                            }
+                        }
+                        updateCartUI();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

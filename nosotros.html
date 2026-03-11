@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nosotros - Oro Verde</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fuentes: Playfair (Lujo Clásico), Montserrat (UI Limpia), Great Vibes (Detalle Logo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'paper': '#E8F1EC',      /* Verde menta muy claro / niebla */
+                        'ink': '#0A140F',        /* Verde selva casi negro */
+                        'gold': '#8B7355',       /* Marrón madera / tierra seca */
+                        'ash': '#A4B0AA',        /* Verde grisáceo para textos secundarios */
+                        'forest': '#12261A',     /* Verde hoja profunda */
+                        'moss': '#2C4A35',       /* Verde musgo vibrante */
+                    },
+                    fontFamily: {
+                        'sans': ['Montserrat', 'sans-serif'],
+                        'serif': ['Playfair Display', 'serif'],
+                        'script': ['Great Vibes', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::selection {
+            background-color: #BCA071;
+            color: #0A0A0A;
+        }
+
+        body {
+            background-color: #0A140F;
+            color: #E8F1EC;
+        }
+
+        /* Ocultar scrollbar para estética más limpia */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0A140F;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2C4A35;
+        }
+
+        /* Efecto de revelado suave al scroll (Sin exagerar) */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Imágenes de Lujo */
+        .img-container {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .img-container img {
+            transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .img-container:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Botón Editorial */
+        .btn-editorial {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            border-bottom: 1px solid #E8F1EC;
+            padding-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.7rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            color: #E8F1EC;
+        }
+
+        .btn-editorial::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #8B7355;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .btn-editorial:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .btn-editorial:hover {
+            color: #8B7355;
+            border-bottom-color: transparent;
+            text-shadow: 0 0 8px rgba(139, 115, 85, 0.4);
+        }
+        
+        .bg-jungle-gradient {
+            background: linear-gradient(to bottom, transparent, #0A140F 95%);
+        }
+
+        .bg-moss-gradient {
+            background: radial-gradient(circle at center, rgba(44, 74, 53, 0.15) 0%, transparent 70%);
+        }
+
+        /* Animación suave de flotación */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        /* Textura sutil de ruido para la selva */
+        .noise-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+            z-index: 5;
+        }
+    </style>
+</head>
+
+<body class="antialiased font-sans flex flex-col min-h-screen">
+
+    <!-- NAVEGACIÓN: Arquitectura Pura y Elegante -->
+    <nav id="navbar"
+        class="fixed w-full z-50 top-0 py-6 px-6 md:px-16 transition-all duration-500 bg-ink/0 text-paper border-b border-transparent">
+        <div class="max-w-[1800px] mx-auto flex justify-between items-center">
+
+            <!-- Logo con isotipo minimalista -->
+            <a href="index.html" class="flex items-center gap-4 group">
+                <div
+                    class="w-8 h-12 border border-gold rounded-[50%] flex items-center justify-center relative overflow-hidden transition-transform duration-700 group-hover:rotate-180">
+                    <div class="w-full h-[1px] bg-gold absolute opacity-50"></div>
+                    <div class="h-full w-[1px] bg-gold absolute opacity-50"></div>
+                    <div class="w-2 h-2 rounded-full border border-gold"></div>
+                </div>
+                <div class="flex flex-col items-start">
+                    <span class="font-serif text-xl tracking-[0.2em] uppercase leading-none text-paper group-hover:text-gold transition-colors duration-500">ORO VERDE</span>
+                    <span
+                        class="font-script text-2xl leading-none -mt-1 text-gold transition-colors duration-500">Guatemala</span>
+                </div>
+            </a>
+
+            <!-- Enlaces Centrales (Desktop) -->
+            <div class="hidden md:flex items-center gap-12">
+                <a href="index.html#origen"
+                    class="uppercase tracking-[0.2em] text-[10px] font-medium text-paper hover:text-gold transition-colors">El
+                    Origen</a>
+                <a href="nosotros.html"
+                    class="uppercase tracking-[0.2em] text-[10px] font-medium text-gold transition-colors">Sobre Nosotros</a>
+                <a href="catalogo.html"
+                    class="uppercase tracking-[0.2em] text-[10px] font-medium text-paper hover:text-gold transition-colors">Catálogo</a>
+                <a href="contacto.html"
+                    class="uppercase tracking-[0.2em] text-[10px] font-medium text-paper hover:text-gold transition-colors">Contacto</a>
+            </div>
+
+            <!-- Acción / CTA y Carrito -->
+            <div class="hidden md:flex items-center gap-8">
+                <button id="cartBtnDesc" class="relative group flex items-center justify-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-paper group-hover:text-gold transition-colors">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="absolute -top-2 -right-2 bg-gold text-ink text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </button>
+            </div>
+
+            <!-- Botones Móvil -->
+            <div class="flex items-center gap-6 md:hidden">
+                <button id="cartBtnMob" class="relative group">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-paper">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="absolute -top-2 -right-2 bg-gold text-ink text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </button>
+                <button class="text-paper">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+    </nav>
+
+    <!-- 1. HERO SELVA Y MONTAÑAS -->
+    <header class="relative w-full h-screen flex flex-col justify-center px-6 md:px-16 overflow-hidden">
+        <!-- Imagen de Fondo (Bosque y Neblina) -->
+        <div class="absolute inset-0 z-0 bg-ink">
+            <img src="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=2000&auto=format&fit=crop"
+                alt="Montañas y Jungla" class="w-full h-full object-cover brightness-[0.35] scale-105 motion-safe:animate-[pulse_15s_ease-in-out_infinite_alternate]">
+            <div class="absolute inset-0 bg-jungle-gradient z-10"></div>
+            <div class="noise-overlay"></div>
+        </div>
+        
+        <div class="relative z-20 max-w-[1800px] mx-auto w-full text-center fade-up mt-24">
+            <p class="font-sans text-[10px] uppercase tracking-[0.6em] text-moss mb-8 tracking-[1em] opacity-80">El Pulmón del Mundo</p>
+            <h1 class="font-serif text-[12vw] md:text-[10vw] leading-[0.8] tracking-tighter text-paper uppercase drop-shadow-[0_15px_15px_rgba(0,0,0,0.8)]">
+                Raíces<br>
+                <span class="italic text-gold font-light drop-shadow-[0_0_20px_rgba(139,115,85,0.3)]">Profundas</span>
+            </h1>
+        </div>
+    </header>
+
+    <!-- 2. HISTORIA EN EL BOSQUE NUBOSO -->
+    <section class="py-32 md:py-48 px-6 md:px-16 bg-ink text-paper relative overflow-hidden">
+        <div class="bg-moss-gradient absolute inset-0 z-0"></div>
+        <div class="noise-overlay"></div>
+        <div class="max-w-[1800px] mx-auto grid md:grid-cols-12 gap-16 md:gap-24 items-center relative z-10">
+            
+            <div class="md:col-span-5 md:col-start-2 fade-up order-2 md:order-1 relative">
+                <!-- Orbes de luz sutil -->
+                <div class="absolute -top-12 -left-12 w-48 h-48 bg-moss/20 rounded-full blur-[80px] animate-pulse"></div>
+                
+                <h2 class="font-serif text-5xl md:text-7xl mb-12 uppercase tracking-tighter leading-none">El Espíritu<br><span class="italic text-moss font-light">de la Selva</span></h2>
+                <div class="w-16 h-[2px] bg-gold/50 mb-12"></div>
+                <p class="font-sans text-sm md:text-base leading-relaxed text-paper/80 font-light mb-8 max-w-md">
+                    Bajo el dosel de árboles centenarios y envueltos por la bruma perpetua de las altas cumbres. Nuestra esencia está arraigada en el suelo húmedo y fértil del ecosistema guatemalteco.
+                </p>
+                <p class="font-sans text-sm md:text-base leading-relaxed text-paper/80 font-light max-w-md">
+                    Una relación simbiótica e inquebrantable. Cada semilla germina en armonía con la flora silvestre y la humedad del trópico, absorbiendo los susurros de la tierra volcánica.
+                </p>
+            </div>
+            
+            <div class="md:col-span-5 md:col-start-7 h-[70vh] md:h-[85vh] img-container fade-up delay-200 order-1 md:order-2 animate-float shadow-2xl shadow-moss/10">
+                <img src="https://images.unsplash.com/photo-1542224566-6f34e6d42125?q=80&w=800&auto=format&fit=crop"
+                    alt="Niebla de Montaña" class="w-full h-full object-cover saturate-150 contrast-125 border border-white/5 rounded-sm">
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3. SECCIÓN FOTOGRÁFICA IMPACTANTE -->
+    <section class="w-full h-[60vh] md:h-[90vh] flex items-center justify-center relative bg-fixed bg-center bg-cover"
+        style="background-image: url('https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?q=80&w=2000&auto=format&fit=crop');">
+        <div class="absolute inset-0 bg-forest/80 backdrop-grayscale-[50%]"></div>
+        <div class="noise-overlay"></div>
+        <div class="relative z-10 text-center fade-up px-6 max-w-5xl mx-auto flex flex-col items-center">
+            <div class="w-1 h-20 bg-gold/50 mb-12"></div>
+            <h2 class="font-serif text-3xl md:text-6xl text-paper tracking-tight mix-blend-overlay opacity-90 leading-tight mb-12 drop-shadow-md">
+                "La grandeza no se fuerza. Nace lentamente, cobijada por la sombra de los gigantes verdes y alimentada por la lluvia."
+            </h2>
+            <span class="font-sans text-[10px] uppercase tracking-[0.4em] text-gold/80 bg-ink/40 px-6 py-2 rounded-full backdrop-blur-sm border border-gold/10">— El Guardián del Bosque</span>
+        </div>
+    </section>
+
+    <!-- 4. EL ECOSISTEMA (Fondo Tierra) -->
+    <section class="py-32 md:py-48 px-6 md:px-16 bg-forest text-paper relative overflow-hidden">
+        <div class="absolute right-0 top-0 w-[800px] h-[800px] bg-moss/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
+        <div class="max-w-[1800px] mx-auto relative z-10">
+            <div class="text-center mb-24 md:mb-40 fade-up">
+                <p class="font-sans text-[10px] uppercase tracking-[0.6em] text-gold/70 mb-4 inline-block border-b border-gold/20 pb-2">La Fuerza de lo Salvaje</p>
+                <h2 class="font-serif text-6xl md:text-8xl uppercase tracking-tighter text-paper mt-6 text-shadow-sm">Bioma de Altura</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-16 md:gap-12 lg:gap-20">
+                <!-- Tarjeta 1 -->
+                <div class="flex flex-col group fade-up relative">
+                    <div class="absolute -left-4 -top-4 text-8xl font-serif text-paper/5 z-0 group-hover:text-gold/10 transition-colors duration-700 pointer-events-none">01</div>
+                    <div class="w-full aspect-[4/5] overflow-hidden mb-8 relative z-10 border border-white/5 rounded-sm shadow-2xl">
+                        <div class="absolute inset-0 bg-ink/20 group-hover:bg-transparent transition-colors duration-700 z-10 pointer-events-none"></div>
+                        <img src="https://images.unsplash.com/photo-1542890520-a6ffcc48c8b4?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 saturate-[1.2] brightness-90">
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-serif text-3xl uppercase tracking-widest text-paper mb-4 group-hover:text-moss transition-colors duration-500">Tierra Volcánica</h3>
+                        <p class="font-sans text-sm text-ash font-light leading-relaxed">
+                            Suelo negro y rico en minerales, producto del suspiro incandescente de cráteres inactivos, transfiriendo notas terrosas profundas a la cosecha.
+                        </p>
+                    </div>
+                </div>
+                <!-- Tarjeta 2 -->
+                <div class="flex flex-col group fade-up delay-100 mt-0 md:mt-24 relative">
+                    <div class="absolute -left-4 -top-4 text-8xl font-serif text-paper/5 z-0 group-hover:text-gold/10 transition-colors duration-700 pointer-events-none">02</div>
+                    <div class="w-full aspect-[4/5] overflow-hidden mb-8 relative z-10 border border-white/5 rounded-sm shadow-2xl">
+                        <div class="absolute inset-0 bg-ink/20 group-hover:bg-transparent transition-colors duration-700 z-10 pointer-events-none"></div>
+                        <img src="https://images.unsplash.com/photo-1469122312224-c5846569feb1?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 saturate-[1.2] hue-rotate-15 brightness-90">
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-serif text-3xl uppercase tracking-widest text-paper mb-4 group-hover:text-moss transition-colors duration-500">Bajo la Fronda</h3>
+                        <p class="font-sans text-sm text-ash font-light leading-relaxed">
+                            Un refugio oscuro y perenne proporcionado por enormes árboles nativos, que protegen los granos madurando con exquisita lentitud.
+                        </p>
+                    </div>
+                </div>
+                <!-- Tarjeta 3 -->
+                <div class="flex flex-col group fade-up delay-200 mt-0 md:mt-48 relative">
+                    <div class="absolute -left-4 -top-4 text-8xl font-serif text-paper/5 z-0 group-hover:text-gold/10 transition-colors duration-700 pointer-events-none">03</div>
+                    <div class="w-full aspect-[4/5] overflow-hidden mb-8 relative z-10 border border-white/5 rounded-sm shadow-2xl">
+                        <div class="absolute inset-0 bg-ink/20 group-hover:bg-transparent transition-colors duration-700 z-10 pointer-events-none"></div>
+                        <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 text-ink saturate-[1.1] contrast-125 brightness-90">
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-serif text-3xl uppercase tracking-widest text-paper mb-4 group-hover:text-moss transition-colors duration-500">Abrazo de Nubes</h3>
+                        <p class="font-sans text-sm text-ash font-light leading-relaxed">
+                            La alta humedad condensada y los amaneceres gélidos curten la semilla, dotándola de una acidez exótica y equilibrada.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-ink text-paper px-6 md:px-16 pb-12 pt-32 border-t border-moss/20 mt-auto relative overflow-hidden">
+        <div class="noise-overlay opacity-30"></div>
+        <div class="max-w-[1800px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-12 relative z-10">
+
+            <div class="flex flex-col gap-6">
+                <div class="flex flex-col items-start">
+                    <span class="font-serif text-2xl tracking-[0.2em] uppercase leading-none text-paper/90">ORO VERDE</span>
+                    <span class="font-script text-3xl leading-none -mt-1 text-moss">Guatemala</span>
+                </div>
+                <a href="catalogo.html" class="btn-editorial mt-6 text-paper/70 border-b-paper/30 hover:text-gold hover:border-b-transparent">Adquirir Colección</a>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-12 md:gap-24 font-sans text-[10px] uppercase tracking-[0.2em] text-ash">
+                <div class="flex flex-col gap-4">
+                    <p class="text-moss mb-2 font-medium">Navegación</p>
+                    <a href="index.html#origen" class="hover:text-gold transition-colors">El Origen</a>
+                    <a href="nosotros.html" class="hover:text-gold transition-colors text-paper">Sobre Nosotros</a>
+                    <a href="contacto.html" class="hover:text-gold transition-colors">Contacto</a>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <p class="text-moss mb-2 font-medium">Social</p>
+                    <a href="#" class="hover:text-gold transition-colors">Instagram</a>
+                    <a href="#" class="hover:text-gold transition-colors">Facebook</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div
+            class="max-w-[1800px] mx-auto mt-24 pt-8 border-t border-moss/20 flex flex-col md:flex-row justify-between items-center font-sans text-[9px] uppercase tracking-[0.2em] text-ash relative z-10">
+            <p>&copy;
+                <script>document.write(new Date().getFullYear())</script> Oro Verde. Todos los derechos reservados.
+            </p>
+            <p class="mt-4 md:mt-0">Cultivado por <span class="text-gold">Altavera</span></p>
+        </div>
+    </footer>
+
+    <!-- CARRITO SLIDE-OVER -->
+    <div id="cartOverlay" class="fixed inset-0 bg-ink/80 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-500"></div>
+    <div id="cartSidebar" class="fixed top-0 right-0 h-full w-full md:w-[450px] bg-paper text-ink z-[60] transform translate-x-full transition-transform duration-500 ease-in-out border-l border-ink/10 flex flex-col">
+        <!-- Header Carrito -->
+        <div class="p-8 border-b border-ink/10 flex justify-between items-center">
+            <h2 class="font-serif text-3xl uppercase tracking-widest text-ink">Tu <span class="italic text-gold">Selección</span></h2>
+            <button id="closeCartBtn" class="text-ash hover:text-ink transition-colors">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Items Carrito (Vacío por defecto) -->
+        <div id="cartItems" class="flex-grow p-8 overflow-y-auto flex flex-col justify-center items-center text-center">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-ash mb-6">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <p class="font-sans text-sm text-ash font-light leading-relaxed max-w-[80%]">
+                Tu selección está vacía.<br>Explora nuestras reservas exclusivas.
+            </p>
+        </div>
+
+        <!-- Checkout / Total -->
+        <div class="p-8 border-t border-ink/10 bg-paper">
+            <div class="flex justify-between items-end mb-6">
+                <span class="font-sans text-xs uppercase tracking-[0.2em] text-ash">Subtotal</span>
+                <span class="font-sans text-xl text-ink">Q. 0.00</span>
+            </div>
+            <a href="checkout.html" class="w-full bg-ink text-paper py-4 text-xs font-sans uppercase tracking-[0.2em] hover:bg-gold transition-colors duration-300 flex justify-center items-center text-center">
+                Proceder a la Orden
+            </a>
+        </div>
+    </div>
+
+    <!-- LÓGICA DE REVELADO -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const fadeElements = document.querySelectorAll('.fade-up');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            fadeElements.forEach(el => observer.observe(el));
+
+            // Lógica del Navbar estática oscura translucida en scroll
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 30) {
+                    navbar.classList.add('bg-ink/95', 'backdrop-blur-md', 'py-4', 'border-white/10');
+                    navbar.classList.remove('bg-ink/0', 'py-6', 'border-transparent');
+                } else {
+                    navbar.classList.add('bg-ink/0', 'py-6', 'border-transparent');
+                    navbar.classList.remove('bg-ink/95', 'backdrop-blur-md', 'py-4', 'border-white/10');
+                }
+            });
+            // Lógica del Carrito
+            const cartBtnDesc = document.getElementById('cartBtnDesc');
+            const cartBtnMob = document.getElementById('cartBtnMob');
+            const closeCartBtn = document.getElementById('closeCartBtn');
+            const cartSidebar = document.getElementById('cartSidebar');
+            const cartOverlay = document.getElementById('cartOverlay');
+
+            function openCart() {
+                cartSidebar.classList.remove('translate-x-full');
+                cartOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            }
+
+            function closeCart() {
+                cartSidebar.classList.add('translate-x-full');
+                cartOverlay.classList.add('opacity-0', 'pointer-events-none');
+            }
+
+            if(cartBtnDesc) cartBtnDesc.addEventListener('click', openCart);
+            if(cartBtnMob) cartBtnMob.addEventListener('click', openCart);
+            if(closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
+            if(cartOverlay) cartOverlay.addEventListener('click', closeCart);
+        });
+    </script>
+</body>
+
+</html>

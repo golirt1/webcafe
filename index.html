@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oro Verde | Plain & Fancy</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fuentes: Playfair (Lujo Clásico), Montserrat (UI Limpia), Great Vibes (Detalle Logo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'paper': '#F5F2EB',      /* Crema ultra limpio */
+                        'ink': '#0A0A0A',        /* Negro carbón */
+                        'gold': '#BCA071',       /* Oro pálido elegante */
+                        'ash': '#888888',        /* Gris para jerarquía de texto */
+                    },
+                    fontFamily: {
+                        'sans': ['Montserrat', 'sans-serif'],
+                        'serif': ['Playfair Display', 'serif'],
+                        'script': ['Great Vibes', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::selection {
+            background-color: #BCA071;
+            color: #0A0A0A;
+        }
+
+        body {
+            background-color: #F5F2EB;
+            color: #0A0A0A;
+        }
+
+        /* Ocultar scrollbar para estética más limpia */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F5F2EB;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #0A0A0A;
+        }
+
+        /* Efecto de revelado suave al scroll (Sin exagerar) */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Imágenes de Lujo */
+        .img-container {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .img-container img {
+            transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .img-container:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Botón Editorial */
+        .btn-editorial {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            border-bottom: 1px solid #0A0A0A;
+            padding-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.7rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .btn-editorial::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #BCA071;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .btn-editorial:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .btn-editorial:hover {
+            color: #BCA071;
+            border-bottom-color: transparent;
+        }
+
+        /* Parallax muy sutil */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body class="antialiased font-sans">
+
+    <!-- NAVEGACIÓN: Arquitectura Pura y Elegante -->
+    <nav id="navbar"
+        class="fixed w-full z-50 top-0 py-6 px-6 md:px-16 transition-all duration-500 bg-paper/0 text-ink border-b border-transparent">
+        <div class="max-w-[1800px] mx-auto flex justify-between items-center">
+
+            <!-- Logo con isotipo minimalista -->
+            <a href="#" class="flex items-center gap-4 group">
+                <!-- Isotipo: Óvalo dorado simplificado -->
+                <div
+                    class="w-8 h-12 border border-gold rounded-[50%] flex items-center justify-center relative overflow-hidden transition-transform duration-700 group-hover:rotate-180">
+                    <div class="w-full h-[1px] bg-gold absolute opacity-50"></div>
+                    <div class="h-full w-[1px] bg-gold absolute opacity-50"></div>
+                    <div class="w-2 h-2 rounded-full border border-gold"></div>
+                </div>
+                <div class="flex flex-col items-start">
+                    <span class="font-serif text-xl tracking-[0.2em] uppercase leading-none">ORO VERDE</span>
+                    <span
+                        class="font-script text-2xl leading-none -mt-1 text-gold group-hover:text-ink transition-colors duration-500">Guatemala</span>
+                </div>
+            </a>
+
+            <!-- Enlaces Centrales (Desktop) -->
+            <div class="hidden md:flex items-center gap-12">
+                <a href="#origen"
+                    class="uppercase tracking-[0.2em] text-[10px] font-medium text-ink hover:text-gold transition-colors">El
+                    Origen</a>
+                <a href="nosotros.html"
+                    class="uppercase tracking-[0.2em] text-[10px] font-medium text-ink hover:text-gold transition-colors">Sobre Nosotros</a>
+                <a href="catalogo.html"
+                    class="uppercase tracking-[0.2em] text-[10px] font-medium text-ink hover:text-gold transition-colors">Catálogo</a>
+                <a href="#contacto.html"
+                    class="uppercase tracking-[0.2em] text-[10px] font-medium text-ink hover:text-gold transition-colors">Contacto</a>
+            </div>
+
+            <!-- Acción / CTA -->
+            <div class="hidden md:flex items-center">
+                <a href="catalogo.html" class="btn-editorial text-ink">Adquirir Colección</a>
+            </div>
+
+            <!-- Botón Menú Móvil -->
+            <button class="md:hidden text-ink">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 1. HERO: Puro impacto tipográfico y espacio -->
+    <header class="relative w-full h-screen flex flex-col justify-center px-6 md:px-16 pt-20">
+        <div
+            class="max-w-[1800px] mx-auto w-full flex flex-col md:flex-row justify-between items-center md:items-end gap-12">
+
+            <!-- Texto Gigante -->
+            <div class="w-full md:w-3/5 fade-up z-10">
+                <p class="font-sans text-[10px] uppercase tracking-[0.4em] text-ash mb-6">Café Premium de Altura</p>
+                <h1 class="font-serif text-[15vw] md:text-[11vw] leading-[0.85] tracking-tighter text-ink uppercase">
+                    Sabor<br>
+                    <span class="italic text-gold font-light pl-12 md:pl-24">Puro.</span>
+                </h1>
+            </div>
+
+            <!-- Imagen Editorial (Retrato) -->
+            <div class="w-full md:w-2/5 md:max-w-md h-[50vh] md:h-[70vh] img-container fade-up delay-200">
+                <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=1000&auto=format&fit=crop"
+                    alt="Café de Especialidad" class="w-full h-full object-cover grayscale-[30%]">
+            </div>
+
+        </div>
+    </header>
+
+    <!-- 2. EL MANIFIESTO: Blanco sobre Negro, Lectura Limpia -->
+    <section id="origen" class="bg-ink text-paper py-32 md:py-48 px-6 md:px-16">
+        <div class="max-w-screen-xl mx-auto grid md:grid-cols-12 gap-16">
+
+            <div class="md:col-span-4 fade-up">
+                <h2 class="font-serif text-3xl md:text-5xl leading-tight">
+                    El Origen <br>
+                    <span class="italic text-gold">Nuestra Tierra</span>
+                </h2>
+            </div>
+
+            <div class="md:col-span-7 md:col-start-6 flex flex-col gap-10 fade-up delay-200">
+                <p class="font-serif text-2xl md:text-3xl leading-relaxed font-light">
+                    Oro Verde nace con el propósito de resaltar la riqueza cafetalera de Guatemala y honrar el trabajo
+                    de quienes cultivan el grano en nuestras montañas.
+                </p>
+                <div class="w-full h-[1px] bg-white/10"></div>
+                <p class="font-sans text-sm md:text-base leading-relaxed text-paper/70 font-light max-w-lg">
+                    La marca busca ofrecer más que café: una experiencia que conecta origen, calidad y tradición. Cada
+                    bolsa representa el esfuerzo de los productores, el cuidado en el proceso y el orgullo por un café
+                    que refleja la identidad de nuestras regiones.
+                </p>
+                <a href="#" class="btn-editorial text-paper w-fit mt-4">Descubrir la historia</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3. SOBRE NOSOTROS: Montañas y Selva -->
+    <section id="nosotros" class="py-32 md:py-48 px-6 md:px-16 bg-paper text-ink relative overflow-hidden">
+        <div class="max-w-[1800px] mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div class="fade-up z-10">
+                <p class="font-sans text-[10px] uppercase tracking-[0.4em] text-ash mb-6">Nuestras Raíces</p>
+                <h2 class="font-serif text-5xl md:text-7xl uppercase tracking-tighter mb-8">Montañas<br>& Selva</h2>
+                <p class="font-sans text-sm md:text-base leading-relaxed text-ash font-light max-w-lg mb-10">
+                    Nacidos en el corazón de las cordilleras guatemaltecas, donde la espesa selva abraza las montañas volcánicas. Descubre la mística de las tierras altas donde cultivamos el oro verde.
+                </p>
+                <a href="nosotros.html" class="btn-editorial text-ink">Conocer Sobre Nosotros</a>
+            </div>
+            <div class="h-[60vh] md:h-[80vh] img-container fade-up delay-200">
+                <img src="https://images.unsplash.com/photo-1542224566-6f34e6d42125?q=80&w=1000&auto=format&fit=crop"
+                    alt="Montañas y Selva" class="w-full h-full object-cover grayscale-[10%]">
+            </div>
+        </div>
+    </section>
+
+    <!-- La sección de LA COLECCIÓN ha sido movida a catalogo.html -->
+
+    <!-- 4. IMAGEN A PANTALLA COMPLETA (Transición Dramática) -->
+    <section class="w-full h-[80vh] parallax flex items-center justify-center"
+        style="background-image: url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=2000&auto=format&fit=crop');">
+        <div class="text-center fade-up">
+            <h2
+                class="font-serif text-5xl md:text-8xl text-paper tracking-tighter mix-blend-overlay opacity-80 uppercase">
+                Calidad<br>Suprema
+            </h2>
+        </div>
+    </section>
+
+    <!-- La sección de CONTACTO ha sido movida a contacto.html -->
+
+    <!-- 6. FOOTER ULTRAMINIMALISTA -->
+    <footer class="bg-ink text-paper px-6 md:px-16 pb-12 pt-20 border-t border-white/5">
+        <div class="max-w-[1800px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
+
+            <div class="flex flex-col gap-6">
+                <!-- Logo Footer -->
+                <div class="flex flex-col items-start">
+                    <span class="font-serif text-2xl tracking-[0.2em] uppercase leading-none">ORO VERDE</span>
+                    <span class="font-script text-3xl leading-none -mt-1 text-gold">Guatemala</span>
+                </div>
+                <a href="catalogo.html" class="btn-editorial text-paper mt-6">Adquirir Colección</a>
+            </div>
+
+            <div
+                class="flex flex-col md:flex-row gap-12 md:gap-24 font-sans text-[10px] uppercase tracking-[0.2em] text-ash">
+                <div class="flex flex-col gap-4">
+                    <p class="text-paper mb-2">Navegación</p>
+                    <a href="#" class="hover:text-gold transition-colors">El Origen</a>
+                    <a href="nosotros.html" class="hover:text-gold transition-colors">Sobre Nosotros</a>
+                    <a href="contacto.html" class="hover:text-gold transition-colors">Contacto</a>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <p class="text-paper mb-2">Social</p>
+                    <a href="#" class="hover:text-gold transition-colors">Instagram</a>
+                    <a href="#" class="hover:text-gold transition-colors">Facebook</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div
+            class="max-w-[1800px] mx-auto mt-24 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center font-sans text-[9px] uppercase tracking-[0.2em] text-ash">
+            <p>&copy;
+                <script>document.write(new Date().getFullYear())</script> Oro Verde. Todos los derechos reservados.
+            </p>
+            <p class="mt-4 md:mt-0">Premium by <span class="text-gold">Altavera</span></p>
+        </div>
+    </footer>
+
+    <!-- LÓGICA DE REVELADO (Sin animaciones continuas molestas) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const fadeElements = document.querySelectorAll('.fade-up');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // Dejamos de observar una vez que aparece para que sea permanente
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            fadeElements.forEach(el => observer.observe(el));
+
+            // Lógica del Navbar para efecto cristal al hacer scroll
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 30) {
+                    navbar.classList.add('bg-paper/95', 'backdrop-blur-md', 'border-ink/10', 'py-4');
+                    navbar.classList.remove('bg-paper/0', 'border-transparent', 'py-6');
+                } else {
+                    navbar.classList.add('bg-paper/0', 'border-transparent', 'py-6');
+                    navbar.classList.remove('bg-paper/95', 'backdrop-blur-md', 'border-ink/10', 'py-4');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
