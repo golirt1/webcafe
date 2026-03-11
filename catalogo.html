@@ -508,7 +508,7 @@
             if(cartOverlay) cartOverlay.addEventListener('click', closeCart);
 
             // --- Lógica de Añadir al Carrito ---
-            let cart = [];
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
             const cartBadges = document.querySelectorAll('#cartBtnDesc span, #cartBtnMob span');
             const cartItemsContainer = document.getElementById('cartItems');
             const cartSubtotal = document.getElementById('cartSubtotal');
@@ -558,6 +558,14 @@
                 // Actualizar total
                 const totalAmount = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
                 if (cartSubtotal) cartSubtotal.innerText = `Q. ${totalAmount.toFixed(2)}`;
+
+                // Guardar en localStorage
+                localStorage.setItem('cart', JSON.stringify(cart));
+            }
+
+            // Inicializar UI si hay items guardados
+            if (cart.length > 0) {
+                updateCartUI();
             }
 
             // Detectar clicks en "Añadir al Carrito"

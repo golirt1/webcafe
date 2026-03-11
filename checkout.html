@@ -111,7 +111,7 @@
 
             <div class="bg-white p-8 md:p-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] border border-ink/5">
                 
-                <form action="pago.html" method="GET" class="flex flex-col gap-10">
+                <form id="checkoutForm" class="flex flex-col gap-10">
                     
                     <!-- Sección: Datos del Cliente -->
                     <div>
@@ -153,11 +153,6 @@
                             <div class="relative group">
                                 <select id="departamento" name="departamento" class="w-full bg-transparent border-b border-ink/20 py-3 text-sm font-light text-ink focus:outline-none focus:border-gold appearance-none cursor-pointer" required>
                                     <option value="" disabled selected hidden>Departamento</option>
-                                    <option value="Guatemala">Guatemala</option>
-                                    <option value="Sacatepequez">Sacatepéquez</option>
-                                    <option value="Quetzaltenango">Quetzaltenango</option>
-                                    <option value="Escuintla">Escuintla</option>
-                                    <option value="Otro">Otro (Especificar en Referencias)</option>
                                 </select>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-ink">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -165,8 +160,12 @@
                             </div>
 
                             <div class="relative group">
-                                <input type="text" id="municipio" name="municipio" class="w-full bg-transparent border-b border-ink/20 py-3 text-sm font-light text-ink placeholder-transparent focus:outline-none focus:border-gold peer" placeholder="Municipio" required>
-                                <label for="municipio" class="absolute left-0 top-3 text-xs font-sans uppercase tracking-[0.1em] text-ash transition-all peer-focus:-top-3 peer-focus:text-[9px] peer-focus:text-gold peer-valid:-top-3 peer-valid:text-[9px] peer-valid:text-ink">Municipio / Ciudad</label>
+                                <select id="municipio" name="municipio" class="w-full bg-transparent border-b border-ink/20 py-3 text-sm font-light text-ink focus:outline-none focus:border-gold appearance-none cursor-pointer" required disabled>
+                                    <option value="" disabled selected hidden>Municipio / Ciudad</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-ink">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -174,8 +173,8 @@
                     <!-- Botones de Acción -->
                     <div class="mt-8 flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-ink/10">
                         <a href="catalogo.html" class="font-sans text-xs uppercase tracking-[0.2em] text-ash hover:text-ink transition-colors">&larr; Volver al catálogo</a>
-                        <button type="submit" class="w-full md:w-auto bg-ink text-paper py-4 px-12 text-xs font-sans uppercase tracking-[0.2em] hover:bg-gold transition-colors duration-300">
-                            Continuar a Pagar
+                        <button type="submit" id="submitOrderBtn" class="w-full md:w-auto bg-ink text-paper py-4 px-12 text-xs font-sans uppercase tracking-[0.2em] hover:bg-gold transition-colors duration-300">
+                            Enviar Solicitud
                         </button>
                     </div>
 
@@ -215,6 +214,109 @@
             }, observerOptions);
 
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+            // Datos de Departamentos y Municipios de Guatemala
+            const gtData = {
+                "Alta Verapaz": ["Cobán", "Santa Cruz Verapaz", "San Cristóbal Verapaz", "Tactic", "Tamahú", "Tucurú", "Panzós", "Senahú", "San Pedro Carchá", "San Juan Chamelco", "Lanquín", "Cahabón", "Chisec", "Chahal", "Fray Bartolomé de las Casas", "Santa Catalina La Tinta", "Raxruhá"],
+                "Baja Verapaz": ["Salamá", "San Miguel Chicaj", "Rabinal", "Cubulco", "Granados", "El Chol", "San Jerónimo", "Purulhá"],
+                "Chimaltenango": ["Chimaltenango", "San José Poaquil", "San Martín Jilotepeque", "Comalapa", "Santa Apolonia", "Tecpán", "Patzún", "Pochuta", "Patzicía", "Santa Cruz Balanyá", "Acatenango", "Yepocapa", "San Andrés Itzapa", "Parramos", "Zaragoza", "El Tejar"],
+                "Chiquimula": ["Chiquimula", "San José La Arada", "San Juan Ermita", "Jocotán", "Camotán", "Olopa", "Esquipulas", "Concepción Las Minas", "Quetzaltepeque", "San Jacinto", "Ipala"],
+                "El Progreso": ["Guastatoya", "Morazán", "San Agustín Acasaguastlán", "San Cristóbal Acasaguastlán", "El Jícaro", "Sansare", "Sanarate", "San Antonio La Paz"],
+                "Escuintla": ["Escuintla", "Santa Lucía Cotzumalguapa", "La Democracia", "Siquinalá", "Masagua", "Tiquisate", "La Gomera", "Guanagazapa", "San José", "Iztapa", "Palín", "San Vicente Pacaya", "Nueva Concepción", "Sipacate"],
+                "Guatemala": ["Guatemala", "Santa Catarina Pinula", "San José Pinula", "San José del Golfo", "Palencia", "Chinautla", "San Pedro Ayampuc", "Mixco", "San Pedro Sacatepéquez", "San Juan Sacatepéquez", "San Raymundo", "Chuarrancho", "Fraijanes", "Amatitlán", "Villa Nueva", "Villa Canales", "Petapa"],
+                "Huehuetenango": ["Huehuetenango", "Chiantla", "Malacatancito", "Cuilco", "Nentón", "San Pedro Necta", "Jacaltenango", "Soloma", "Ixtahuacán", "Santa Bárbara", "La Libertad", "La Democracia", "San Miguel Acatán", "San Rafael La Independencia", "Todos Santos Cuchumatán", "San Juan Atitán", "Santa Eulalia", "San Mateo Ixtatán", "Colotenango", "San Sebastián Huehuetenango", "Tectitán", "Concepción Huista", "San Juan Ixcoy", "San Antonio Huista", "San Sebastián Coatán", "Barillas", "Aguacatán", "San Rafael Petzal", "San Gaspar Ixchil", "Santiago Chimaltenango", "Santa Ana Huista", "Unión Cantinil", "Petatán"],
+                "Izabal": ["Puerto Barrios", "Livingston", "El Estor", "Morales", "Los Amates"],
+                "Jalapa": ["Jalapa", "San Pedro Pinula", "San Luis Jilotepeque", "San Manuel Chaparrón", "San Carlos Alzatate", "Monjas", "Mataquescuintla"],
+                "Jutiapa": ["Jutiapa", "El Progreso", "Santa Catarina Mita", "Agua Blanca", "Asunción Mita", "Yupiltepeque", "Atescatempa", "Jerez", "El Adelanto", "Zapotitlán", "Comapa", "Jalpatagua", "Conguaco", "Moyuta", "Pasaco", "San José Acatempa", "Quesada"],
+                "Petén": ["Flores", "San José", "San Benito", "San Andrés", "La Libertad", "San Francisco", "Santa Ana", "Dolores", "San Luis", "Sayaxché", "Melchor de Mencos", "Poptún", "Las Cruces", "El Chal"],
+                "Quetzaltenango": ["Quetzaltenango", "Salcajá", "Olintepeque", "San Carlos Sija", "Sibilia", "Cabricán", "Cajolá", "San Miguel Sigüilá", "Ostuncalco", "San Mateo", "Concepción Chiquirichapa", "San Martín Sacatepéquez", "Almolonga", "Cantel", "Huitán", "Zunil", "Colomba", "San Francisco La Unión", "El Palmar", "Coatepeque", "Génova", "Flores Costa Cuca", "La Esperanza", "Palestina de Los Altos"],
+                "Quiché": ["Santa Cruz del Quiché", "Chiché", "Chinique", "Zacualpa", "Chajul", "Chichicastenango", "Patzité", "San Antonio Ilotenango", "San Pedro Jocopilas", "Cunén", "San Juan Cotzal", "Joyabaj", "Nebaj", "San Andrés Sajcabajá", "Uspantán", "Sacapulas", "San Bartolomé Jocotenango", "Canillá", "Chicamán", "Ixcán", "Pachalum"],
+                "Retalhuleu": ["Retalhuleu", "San Sebastián", "Santa Cruz Muluá", "San Martín Zapotitlán", "San Felipe", "San Andrés Villa Seca", "Champerico", "Nuevo San Carlos", "El Asintal"],
+                "Sacatepéquez": ["Antigua Guatemala", "Jocotenango", "Pastores", "Sumpango", "Santo Domingo Xenacoj", "Santiago Sacatepéquez", "San Bartolomé Milpas Altas", "San Lucas Sacatepéquez", "Santa Lucía Milpas Altas", "Magdalena Milpas Altas", "Santa María de Jesús", "Ciudad Vieja", "San Miguel Dueñas", "Alotenango", "San Antonio Aguas Calientes", "Santa Catarina Barahona"],
+                "San Marcos": ["San Marcos", "San Pedro Sacatepéquez", "San Antonio Sacatepéquez", "Comitancillo", "San Miguel Ixtahuacán", "Concepción Tutuapa", "Tacaná", "Sibinal", "Tajumulco", "Tejutla", "San Rafael Pie de La Cuesta", "Nuevo Progreso", "El Tumbador", "El Rodeo", "Malacatán", "Catarina", "Ayutla", "Ocós", "San Pablo", "El Quetzal", "La Reforma", "Pajapita", "Ixchiguán", "San José Ojetenam", "San Cristóbal Cucho", "Sipacapa", "Esquipulas Palo Gordo", "Río Blanco", "San Lorenzo", "La Blanca"],
+                "Santa Rosa": ["Cuilapa", "Barberena", "Santa Rosa de Lima", "Casillas", "San Rafael Las Flores", "Oratorio", "San Juan Tecuaco", "Chiquimulilla", "Taxisco", "Santa María Ixhuatán", "Guazacapán", "Santa Cruz Naranjo", "Pueblo Nuevo Viñas", "Nueva Santa Rosa"],
+                "Sololá": ["Sololá", "San José Chacayá", "Santa María Visitación", "Santa Lucía Utatlán", "Nahualá", "Santa Catarina Ixtahuacán", "Santa Clara La Laguna", "Concepción", "San Andrés Semetabaj", "Panajachel", "Santa Catarina Palopó", "San Antonio Palopó", "San Lucas Tolimán", "Santa Cruz La Laguna", "San Pablo La Laguna", "San Marcos La Laguna", "San Juan La Laguna", "San Pedro La Laguna", "Santiago Atitlán"],
+                "Suchitepéquez": ["Mazatenango", "Cuyotenango", "San Francisco Zapotitlán", "San Bernardino", "San José El Idolo", "Santo Domingo Suchitepéquez", "San Lorenzo", "Samayac", "San Pablo Jocopilas", "San Antonio Suchitepéquez", "San Miguel Panán", "San Gabriel", "Chicacao", "Patulul", "Santa Bárbara", "San Juan Bautista", "Santo Tomás La Unión", "Zunilito", "Pueblo Nuevo", "Río Bravo", "San José La Máquina"],
+                "Totonicapán": ["Totonicapán", "San Cristóbal Totonicapán", "San Francisco El Alto", "San Andrés Xecul", "Momostenango", "Santa María Chiquimula", "Santa Lucía La Reforma", "San Bartolo"],
+                "Zacapa": ["Zacapa", "Estanzuela", "Río Hondo", "Gualán", "Teculután", "Usumatlán", "Cabañas", "San Diego", "La Unión", "Huité", "San Jorge"]
+            };
+
+            const deptSelect = document.getElementById('departamento');
+            const muniSelect = document.getElementById('municipio');
+
+            // Cargar Departamentos
+            Object.keys(gtData).sort().forEach(dept => {
+                let option = document.createElement('option');
+                option.value = dept;
+                option.textContent = dept;
+                deptSelect.appendChild(option);
+            });
+
+            // Actualizar Municipios al cambiar Departamento
+            deptSelect.addEventListener('change', function() {
+                const selectedDept = this.value;
+                muniSelect.innerHTML = '<option value="" disabled selected hidden>Municipio / Ciudad</option>';
+                
+                if (gtData[selectedDept]) {
+                    gtData[selectedDept].sort().forEach(muni => {
+                        let option = document.createElement('option');
+                        option.value = muni;
+                        option.textContent = muni;
+                        muniSelect.appendChild(option);
+                    });
+                    muniSelect.disabled = false;
+                } else {
+                    muniSelect.disabled = true;
+                }
+            });
+
+            // Manejo del formulario para enviar por WhatsApp
+            const checkoutForm = document.getElementById('checkoutForm');
+            
+            checkoutForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Obtener el carrito
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                if(cart.length === 0) {
+                    alert('Tu carrito está vacío. Agrega productos antes de enviar tu solicitud.');
+                    return;
+                }
+
+                // Generar total y lista de items
+                let orderDetails = '';
+                let totalAmount = 0;
+                
+                cart.forEach(item => {
+                    orderDetails += `- ${item.qty}x ${item.name} (Q. ${item.price.toFixed(2)} c/u)\n`;
+                    totalAmount += (item.price * item.qty);
+                });
+
+                // Obtener datos del cliente
+                const nombre = document.getElementById('nombre').value;
+                const apellido = document.getElementById('apellido').value;
+                const email = document.getElementById('email').value;
+                const telefono = document.getElementById('telefono').value;
+                const depto = document.getElementById('departamento').value;
+                const muni = document.getElementById('municipio').value;
+                const direccion1 = document.getElementById('direccion1').value;
+                const referencia = document.getElementById('referencia').value;
+
+                // Construir mensaje
+                const mensaje = `*NUEVA SOLICITUD DE PEDIDO - ORO VERDE* ☕🌲\n\n*DATOS DEL CLIENTE:*\nNombre: ${nombre} ${apellido}\nTeléfono: ${telefono}\nEmail: ${email}\n\n*DIRECCIÓN DE ENVÍO:*\nDepartamento: ${depto}\nMunicipio: ${muni}\nDirección: ${direccion1}\nReferencias: ${referencia ? referencia : 'N/A'}\n\n*DETALLES DEL PEDIDO:*\n${orderDetails}\n*TOTAL A PAGAR: Q. ${totalAmount.toFixed(2)}*\n\n¡Hola! He llenado el formulario en la página web y me gustaría proceder con el pago de mi orden.`;
+
+                // Codificar para URL
+                const encodedMessage = encodeURIComponent(mensaje);
+                
+                // Redirigir a WhatsApp (usamos el API estándar)
+                const wsNumber = "50246783812";
+                const wsUrl = `https://wa.me/${wsNumber}?text=${encodedMessage}`;
+                
+                // Abrir WhatsApp en una nueva pestaña (algunos navegadores bloquean si no es click directo, pero al estar dentro de un submit event suele funcionar)
+                window.location.href = wsUrl;
+                
+                // Opcional: vaciar carrito después de enviar
+                // localStorage.removeItem('cart');
+            });
         });
     </script>
 </body>
