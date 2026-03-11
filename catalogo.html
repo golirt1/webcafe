@@ -400,7 +400,7 @@
                 <span class="font-sans text-xs uppercase tracking-[0.2em] text-ash">Subtotal</span>
                 <span id="cartSubtotal" class="font-sans text-xl text-ink">Q. 0.00</span>
             </div>
-            <a href="checkout.html" class="w-full bg-ink text-paper py-4 text-xs font-sans uppercase tracking-[0.2em] hover:bg-gold transition-colors duration-300 flex justify-center items-center text-center">
+            <a id="checkoutBtn" href="checkout.html" class="w-full bg-ink text-paper py-4 text-xs font-sans uppercase tracking-[0.2em] hover:bg-gold transition-colors duration-300 flex justify-center items-center text-center">
                 Proceder a la Orden
             </a>
         </div>
@@ -563,7 +563,7 @@
                 localStorage.setItem('cart', JSON.stringify(cart));
 
                 // Pasar carrito por URL para clientes usando protocolo file://
-                const checkoutBtn = document.querySelector('a[href^="checkout.html"]');
+                const checkoutBtn = document.getElementById('checkoutBtn');
                 if (checkoutBtn) {
                     checkoutBtn.href = 'checkout.html?cart=' + encodeURIComponent(JSON.stringify(cart));
                 }
