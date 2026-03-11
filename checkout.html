@@ -275,8 +275,22 @@
             checkoutForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                // Obtener el carrito
-                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                // Obtener el carrito (priorizando URL para compatibilidad con file://)
+                let cart = [];
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.has('cart')) {
+                    try {
+                        cart = JSON.parse(decodeURIComponent(urlParams.get('cart')));
+                    } catch(err) {
+                        console.error("Error al leer el carrito de la URL:", err);
+                    }
+                }
+                
+                // Fallback a localStorage
+                if (cart.length === 0) {
+                    cart = JSON.parse(localStorage.getItem('cart')) || [];
+                }
+
                 if(cart.length === 0) {
                     alert('Tu carrito está vacío. Agrega productos antes de enviar tu solicitud.');
                     return;

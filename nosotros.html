@@ -560,8 +560,14 @@
                 const totalAmount = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
                 if (cartSubtotal) cartSubtotal.innerText = `Q. ${totalAmount.toFixed(2)}`;
 
-                // Guardar en localStorage
+                // Guardar en localStorage (de resplado)
                 localStorage.setItem('cart', JSON.stringify(cart));
+
+                // Pasar carrito por URL para clientes usando protocolo file://
+                const checkoutBtn = document.querySelector('a[href^="checkout.html"]');
+                if (checkoutBtn) {
+                    checkoutBtn.href = 'checkout.html?cart=' + encodeURIComponent(JSON.stringify(cart));
+                }
             }
 
             // Inicializar UI si hay items guardados
